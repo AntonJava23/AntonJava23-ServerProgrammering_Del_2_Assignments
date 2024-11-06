@@ -1,8 +1,12 @@
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"  
-            "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans>
-	<bean id="customerService" class="com.yrgo.services.customers.CustomerManagementMockImpl"/>
+    <bean id="customerService" class="com.yrgo.services.customers.CustomerManagementMockImpl"/>
+    <bean id="diaryService" class="com.yrgo.services.diary.DiaryManagementServiceMockImpl"/>
 
-
+    <bean id="callService" class="com.yrgo.services.calls.CallHandlingServiceImpl">
+        <constructor-arg ref="customerService"/>
+        <constructor-arg ref="diaryService"/>
+    </bean>
 </beans>
