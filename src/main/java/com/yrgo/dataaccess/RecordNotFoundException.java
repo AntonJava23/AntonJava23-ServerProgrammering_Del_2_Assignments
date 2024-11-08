@@ -1,7 +1,6 @@
 package com.yrgo.dataaccess;
 
 public class RecordNotFoundException extends Exception {
-
 	/**
 	 * Just to stop warnings.
 	 */
