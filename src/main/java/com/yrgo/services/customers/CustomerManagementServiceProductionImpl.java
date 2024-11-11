@@ -1,7 +1,7 @@
 package com.yrgo.services.customers;
 
-import com.yrgo.dataaccess.CustomerDao;
-import com.yrgo.dataaccess.RecordNotFoundException;
+import com.yrgo.data.CustomerDao;
+import com.yrgo.data.RecordNotFoundException;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 

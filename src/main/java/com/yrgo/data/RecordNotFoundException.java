@@ -1,4 +1,4 @@
-package com.yrgo.dataaccess;
+package com.yrgo.data;
 
 public class RecordNotFoundException extends Exception {
 	/**

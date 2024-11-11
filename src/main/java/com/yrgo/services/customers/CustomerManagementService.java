@@ -2,7 +2,7 @@ package com.yrgo.services.customers;
 
 import java.util.List;
 
-import com.yrgo.dataaccess.RecordNotFoundException;
+import com.yrgo.data.RecordNotFoundException;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 

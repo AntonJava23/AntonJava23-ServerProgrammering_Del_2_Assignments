@@ -1,4 +1,4 @@
-package com.yrgo.dataaccess;
+package com.yrgo.data;
 
 import java.sql.Date;
 import java.sql.ResultSet;

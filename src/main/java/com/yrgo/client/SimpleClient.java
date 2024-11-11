@@ -2,6 +2,7 @@ package com.yrgo.client;
 
 import java.util.*;
 
+import com.yrgo.data.RecordNotFoundException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.yrgo.domain.Action;
@@ -16,7 +17,6 @@ public class SimpleClient {
 
     public static void main(String[] args) {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
-
         CustomerManagementService customerService = container.getBean(CustomerManagementService.class);
         CallHandlingService callService = container.getBean(CallHandlingService.class);
         DiaryManagementService diaryService = container.getBean(DiaryManagementService.class);
@@ -37,6 +37,8 @@ public class SimpleClient {
             callService.recordCall("CS03939", newCall, actions);
         }catch (CustomerNotFoundException e){
             System.out.println("That customer doesn't exist");
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         System.out.println("Here are the outstanding actions:");

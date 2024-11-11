@@ -1,4 +1,4 @@
-package com.yrgo.dataaccess;
+package com.yrgo.data;
 
 import java.util.List;
 
