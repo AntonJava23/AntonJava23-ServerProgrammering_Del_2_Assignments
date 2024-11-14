@@ -20,18 +20,30 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public void updateCustomer(Customer changedCustomer) throws RecordNotFoundException {
-        customerDao.update(changedCustomer);
+    public void updateCustomer(Customer changedCustomer) throws CustomerNotFoundException {
+        try {
+            customerDao.update(changedCustomer);
+        } catch (RecordNotFoundException e) {
+            throw new CustomerNotFoundException("Customer not found for update", e);
+        }
     }
 
     @Override
-    public void deleteCustomer(Customer oldCustomer) throws RecordNotFoundException {
-        customerDao.delete(oldCustomer);
+    public void deleteCustomer(Customer oldCustomer) throws CustomerNotFoundException {
+        try {
+            customerDao.delete(oldCustomer);
+        } catch (RecordNotFoundException e) {
+            throw new CustomerNotFoundException("Customer not found for deletion", e);
+        }
     }
 
     @Override
-    public Customer findCustomerById(String customerId) throws RecordNotFoundException {
-        return customerDao.getById(customerId);
+    public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
+        try {
+            return customerDao.getById(customerId);
+        } catch (RecordNotFoundException e) {
+            throw new CustomerNotFoundException("Customer not found with ID: " + customerId, e);
+        }
     }
 
     @Override
@@ -45,12 +57,20 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public Customer getFullCustomerDetail(String customerId) throws RecordNotFoundException {
-        return customerDao.getFullCustomerDetail(customerId);
+    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
+        try {
+            return customerDao.getFullCustomerDetail(customerId);
+        } catch (RecordNotFoundException e) {
+            throw new CustomerNotFoundException("Customer not found with full detail for ID: " + customerId, e);
+        }
     }
 
     @Override
-    public void recordCall(String customerId, Call callDetails) throws RecordNotFoundException {
-        customerDao.addCall(callDetails, customerId);
+    public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
+        try {
+            customerDao.addCall(callDetails, customerId);
+        } catch (RecordNotFoundException e) {
+            throw new CustomerNotFoundException("Customer not found to record call with ID: " + customerId, e);
+        }
     }
 }
