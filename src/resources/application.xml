@@ -1,11 +1,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+
        xsi:schemaLocation="
-                http://www.springframework.org/schema/beans
-                http://www.springframework.org/schema/beans/spring-beans.xsd
-                http://www.springframework.org/schema/aop
-                http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- DataSources -->
     <bean id="dataSource"
@@ -18,38 +25,19 @@
     </bean>
 
     <!-- Templates -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
+    <bean id="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate"
+          autowire="constructor">
     </bean>
 
-    <!-- Dao Beans -->
-    <bean id="customerDao"
-          class="com.yrgo.data.CustomerDaoJdbcTemplateImpl"
-          init-method="createTables">
-        <constructor-arg ref="jdbcTemplate"/>
+    <!-- Transaction Manager -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          autowire="byName">
     </bean>
 
-    <bean id="actionDao"
-          class="com.yrgo.data.ActionDaoJdbcImpl"
-          init-method="createTables">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
-
-    <!-- Service Beans -->
-    <bean id="customerService" class="com.yrgo.services.customers.CustomerManagementServiceProductionImpl">
-        <constructor-arg ref="customerDao"/>
-    </bean>
-
-    <bean id="diaryService" class="com.yrgo.services.diary.DiaryManagementServiceMockImpl"/>
-
-    <bean id="callService" class="com.yrgo.services.calls.CallHandlingServiceImpl">
-        <constructor-arg ref="customerService"/>
-        <constructor-arg ref="diaryService"/>
-    </bean>
-
-    <!-- Advice -->
-    <bean id="performanceTimingAdvice"
-          class="com.yrgo.advice.PerformanceTimingAdvice"/>
+    <!-- Transaction Configuration -->
+    <tx:annotation-driven/>
 
     <aop:config>
         <aop:aspect ref="performanceTimingAdvice">
@@ -59,4 +47,5 @@
                             execution(* com.yrgo.data.*.* (..))"/>
         </aop:aspect>
     </aop:config>
+    <context:component-scan base-package="com.yrgo"/>
 </beans>

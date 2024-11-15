@@ -17,9 +17,9 @@ public class SimpleClient {
 
     public static void main(String[] args) {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
-        CustomerManagementService customerService = container.getBean(CustomerManagementService.class);
-        CallHandlingService callService = container.getBean(CallHandlingService.class);
-        DiaryManagementService diaryService = container.getBean(DiaryManagementService.class);
+        CustomerManagementService customerService = container.getBean("customerService", CustomerManagementService.class);
+        CallHandlingService callService = container.getBean("callService", CallHandlingService.class);
+        DiaryManagementService diaryService = container.getBean("diaryService", DiaryManagementService.class);
 
         customerService.newCustomer(new Customer("CS03939", "Acme", "Good Customer"));
 

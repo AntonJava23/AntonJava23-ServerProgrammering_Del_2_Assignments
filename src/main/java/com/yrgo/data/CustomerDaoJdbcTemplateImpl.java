@@ -4,12 +4,15 @@ import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String INSERT_NEW_CUSTOMER_SQL = "INSERT INTO CUSTOMER " +
             "(COMPANY_NAME, EMAIL, TELEPHONE, NOTES) VALUES (?,?,?,?)";
@@ -47,6 +50,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
                 customer.getNotes());
     }
 
+    @PostConstruct
     private void createTables() {
         try {
             this.template.update(CREATE_CUSTOMER_TABLE);
@@ -98,22 +102,23 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
         this.template.update(ADD_CALL_SQL, timeAndDate, notes, customerId);
     }
 
-    class CustomerRowMapper<C> implements RowMapper<Customer> {
-        public Customer mapRow(ResultSet rs, int arg1) throws SQLException {
-            String customerId = rs.getString("CUSTOMER_ID");
-            String companyName = rs.getString("COMPANY_NAME");
-            String email = rs.getString("EMAIL");
-            String telephone = rs.getString("TELEPHONE");
-            String notes = rs.getString("NOTES");
-            return new Customer(customerId, companyName, email, telephone, notes);
-        }
-    }
+}
 
-    class CallRowMapper<C> implements RowMapper<Call> {
-        public Call mapRow(ResultSet rs, int arg1) throws SQLException {
-            String notes = rs.getString("NOTES");
-            Date timeAndDate = rs.getDate("TIME_AND_DATE");
-            return new Call(notes, timeAndDate);
-        }
+class CustomerRowMapper<C> implements RowMapper<Customer> {
+    public Customer mapRow(ResultSet rs, int arg1) throws SQLException {
+        String customerId = rs.getString("CUSTOMER_ID");
+        String companyName = rs.getString("COMPANY_NAME");
+        String email = rs.getString("EMAIL");
+        String telephone = rs.getString("TELEPHONE");
+        String notes = rs.getString("NOTES");
+        return new Customer(customerId, companyName, email, telephone, notes);
+    }
+}
+
+class CallRowMapper<C> implements RowMapper<Call> {
+    public Call mapRow(ResultSet rs, int arg1) throws SQLException {
+        String notes = rs.getString("NOTES");
+        Date timeAndDate = rs.getDate("TIME_AND_DATE");
+        return new Call(notes, timeAndDate);
     }
 }
