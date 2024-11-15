@@ -18,7 +18,6 @@ public class CallHandlingServiceImpl implements CallHandlingService {
     private CustomerManagementService customerManagementService;
     private DiaryManagementService diaryManagementService;
 
-
     @Autowired
     public CallHandlingServiceImpl(CustomerManagementService customerManagementService, DiaryManagementService diaryManagementService) {
         this.customerManagementService = customerManagementService;

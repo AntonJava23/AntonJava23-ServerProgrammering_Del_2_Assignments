@@ -51,19 +51,20 @@ public class ActionDaoJdbcImpl implements ActionDao {
 	public void delete(Action oldAction) throws RecordNotFoundException 	{
 		this.template.update(DELETE_SQL, oldAction.getActionId());
 	}
-}
 
-class ActionRowMapper implements RowMapper<Action> {
-	public Action mapRow(ResultSet rs, int arg1) throws SQLException 	{
-		int actionId = rs.getInt(1);
-		String details = rs.getString(2);
-		boolean complete = rs.getBoolean(3);
-		String owningUser = rs.getString(4);
-		Date requiredBy = rs.getDate(5);
+	class ActionRowMapper implements RowMapper<Action> {
+		public Action mapRow(ResultSet rs, int arg1) throws SQLException {
+			int actionId = rs.getInt(1);
+			String details = rs.getString(2);
+			boolean complete = rs.getBoolean(3);
+			String owningUser = rs.getString(4);
+			Date requiredBy = rs.getDate(5);
 
-		Calendar requiredByCal = new java.util.GregorianCalendar();
-		requiredByCal.setTime(requiredBy);
+			Calendar requiredByCal = new java.util.GregorianCalendar();
+			requiredByCal.setTime(requiredBy);
 
-		return new Action("" + actionId, details, requiredByCal, owningUser, complete);
+			return new Action("" + actionId, details, requiredByCal, owningUser, complete);
+		}
 	}
 }
+
