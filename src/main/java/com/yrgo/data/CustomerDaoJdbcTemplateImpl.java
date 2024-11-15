@@ -54,8 +54,8 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
         try {
             this.template.update(CREATE_CUSTOMER_TABLE);
             this.template.update(CREATE_CUSTOMER_CALL_TABLE);
-        } catch (org.springframework.jdbc.BadSqlGrammarException e) {
-            System.out.println("Assuming the Customer or Call table exists");
+        } catch (Exception e) {
+            System.out.println("Table already exists");
         }
     }
 
