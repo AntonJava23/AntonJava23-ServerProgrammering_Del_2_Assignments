@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -23,6 +24,7 @@ public class ActionDaoJdbcImpl implements ActionDao {
 
     private JdbcTemplate template;
 
+    @Autowired
     public ActionDaoJdbcImpl(JdbcTemplate template) {
         this.template = template;
     }
