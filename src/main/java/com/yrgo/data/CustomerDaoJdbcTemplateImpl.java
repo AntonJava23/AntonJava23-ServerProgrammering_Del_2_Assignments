@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-@Repository
+
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String INSERT_NEW_CUSTOMER_SQL = "INSERT INTO CUSTOMER " +
             "(COMPANY_NAME, EMAIL, TELEPHONE, NOTES) VALUES (?,?,?,?)";
@@ -37,7 +37,6 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     private JdbcTemplate template;
 
-    @Autowired
     CustomerDaoJdbcTemplateImpl(JdbcTemplate template) {
         this.template = template;
     }

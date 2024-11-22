@@ -25,16 +25,30 @@
     </bean>
 
     <!-- Templates -->
-    <bean id="jdbcTemplate"
-          class="org.springframework.jdbc.core.JdbcTemplate"
-          autowire="constructor">
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate5.HibernateTemplate"
+          autowire="byType"/>
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.yrgo.domain</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+            </props>
+        </property>
     </bean>
 
     <!-- Transaction Manager -->
     <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          autowire="byName">
-    </bean>
+          class="org.springframework.orm.jpa.JpaTransactionManager"
+          autowire="byType"/>
 
     <!-- Transaction Configuration -->
     <tx:annotation-driven/>
@@ -43,8 +57,8 @@
         <aop:aspect ref="performanceTimingAdvice">
             <aop:around method="performTimingMeasurement"
                         pointcut="
-                            execution(* com.yrgo.services..*.* (..)) ||
-                            execution(* com.yrgo.data.*.* (..))"/>
+                                execution(* com.yrgo.services..*.* (..)) ||
+                                execution(* com.yrgo.data.*.* (..))"/>
         </aop:aspect>
     </aop:config>
     <context:component-scan base-package="com.yrgo"/>
