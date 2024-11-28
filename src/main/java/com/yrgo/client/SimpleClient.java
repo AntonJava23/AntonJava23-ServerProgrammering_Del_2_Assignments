@@ -16,7 +16,7 @@ import com.yrgo.services.diary.DiaryManagementService;
 public class SimpleClient {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
+        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("production-application.xml");
         CustomerManagementService customerService = container.getBean("customerService", CustomerManagementService.class);
         CallHandlingService callService = container.getBean("callService", CallHandlingService.class);
         DiaryManagementService diaryService = container.getBean("diaryService", DiaryManagementService.class);
@@ -33,9 +33,9 @@ public class SimpleClient {
         actions.add(action1);
         actions.add(action2);
 
-        try{
+        try {
             callService.recordCall("CS03939", newCall, actions);
-        }catch (CustomerNotFoundException e){
+        } catch (CustomerNotFoundException e) {
             System.out.println("That customer doesn't exist");
         } catch (RecordNotFoundException e) {
             throw new RuntimeException(e);
@@ -43,7 +43,7 @@ public class SimpleClient {
 
         System.out.println("Here are the outstanding actions:");
         Collection<Action> incompleteActions = diaryService.getAllIncompleteActions("rac");
-        for (Action next: incompleteActions){
+        for (Action next : incompleteActions) {
             System.out.println(next);
         }
         container.close();

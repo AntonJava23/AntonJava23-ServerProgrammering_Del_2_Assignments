@@ -13,11 +13,11 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>org.springframework</groupId>
-             <artifactId>spring-context</artifactId>
-             <version>5.3.28</version>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.28</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
@@ -158,7 +158,7 @@
 
         <resources>
             <resource>
-                    <directory>src/main/resources</directory>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
 
